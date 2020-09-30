@@ -15,16 +15,26 @@ function app() {
     function getManager() {
         inquirer.prompt( [
             {
-               type: "input"
-               name: "managerName"
+               type: "input",
+               name: "managerName",
                message: "What is your Manager's Name?" 
             },
             {
-                type:"input"
-                name:"managerId"
+                type:"input",
+                name:"managerId",
                 message:"What is your ID?"
             },
-        ])
+            {
+                type:"input",
+                name:"managerEmail",
+                message: "What is your email?"
+            }
+            {
+                type:"input",
+                name:"officeNumber",
+                message:"What is the offic number for the manager?"
+            }
+        ]).then(response)
     }
 }
 // Write code to use inquirer to gather information about the development team members,
