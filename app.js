@@ -34,9 +34,108 @@ function app() {
                 name:"officeNumber",
                 message:"What is the offic number for the manager?"
             }
-        ]).then(response)
-    }
-}
+        ]).then(response => {
+           const manager = new Manager(response.manager.name, response.managerId, response.managerEmail, response.officeNumber);
+           teamMember.push(manager);
+           // id.push(response.engineerId);
+           addingNewMember();
+        })
+        function getEngineer() {
+            inquirer.prompt([
+                {
+                    {
+                        type: "input",
+                        name: "egineerName",
+                        message: "What is your Engineer's Name?" 
+                     },
+                     {
+                         type:"input",
+                         name:"engineerId",
+                         message:"What is your ID?"
+                     },
+                     {
+                         type:"input",
+                         name:"engineerEmail",
+                         message: "What is your email?"
+                     }
+                     {
+                         type:"input",
+                         name:"github",
+                         message:"What is your github username?"
+                     }
+            ]).then(response => {
+                const engineer = new Engineer(response.engineerName, response.managerEmail, response.engineerId, response.github)
+                teamMember.push(engineer);
+                //id.push(response.engineerId);
+                addingNewMember();
+            })
+        }
+            function getIntern() {
+                inquirer.prompt([
+                    {
+                        type: "input",
+                        name: "internName",
+                        message: "What is your Interns's Name?" 
+                     },
+                     {
+                         type:"input",
+                         name:"internId",
+                         message:"What is your ID?"
+                     },
+                     {
+                         type:"input",
+                         name:"internEmail",
+                         message: "What is your email?"
+                     },
+                     {
+                         type:"input",
+                         name:"school",
+                         message:"What school did you attend?"
+                     }
+                    ]).then(response => {
+                        const intern = new Intern(response.internName, response.internId, response.internEmail, response.school);
+                    teamMember.push(intern);
+                    //id push (response.internId);
+                    addingNewMember();
+                    })
+                    }
+                    function addingNewMember() {
+                        inquirer.prompt([
+                            {
+                                type: "checkbox",
+                                name: "selectemployees",
+                                message: "Which Employee?",
+                                choices: [
+                                    "engineer",
+                                    "manager",
+                                    "intern",
+                                    "done"
+                                ]
+                             }
+                        ]}then(response => {
+                            const role = response.selectemployees;
+                            if (role == "manager") {
+                                getManager();
+                            }
+                            else if (role =="engineer") {
+                                getEngineer(); 
+                            }
+                            else if (role== "intern") {
+                                getIntern();
+                            }
+                            else if (role == "done") {
+                                renderTeam();
+                            }
+                        });
+                    }
+                    addingNewMember()
+                    }
+                    function renderTeam () {
+                        fs.writeFileSync(outputPath, render(teamMember),"utf-8");
+                    }
+                    app();
+                    //function generateHTML{answers}
+                    
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
